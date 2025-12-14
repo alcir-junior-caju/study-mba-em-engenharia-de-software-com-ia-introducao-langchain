@@ -27,7 +27,6 @@ Para quem quiser visualizar o projeto na IDE clique no teclado a tecla `ponto`, 
 # História e Ecossistema LangChain
 
 ## Timeline: Do Nascimento ao Unicórnio
-Fiz uma linha do tempo bem rápida e simples para facilitar o entendimento:
 
 * **Outubro de 2022 (Criação):** A LangChain começou a nascer com o **Harrison Chase**, em um contexto de pessoas trabalhando com LLMs, OpenAI, ChatGPT e *prompts*.
 * **Abril de 2023 (Startup):** Foi tudo muito rápido. Apenas seis meses após o lançamento inicial, formalizou-se a startup *LangChain*.
