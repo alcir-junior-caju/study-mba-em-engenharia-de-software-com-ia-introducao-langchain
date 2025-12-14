@@ -26,9 +26,6 @@ Para quem quiser visualizar o projeto na IDE clique no teclado a tecla `ponto`, 
 
 # História e Ecossistema LangChain
 
-## Alinhamento e Expectativas
-Bom, pessoal, agora que alinhamos as expectativas, quero passar rapidamente por isso. Nosso curso será bem prático, de forma geral, mas é fundamental que você entenda, pelo menos, de onde vem essa história de **LangChain** para ter uma visão geral sólida.
-
 ## Timeline: Do Nascimento ao Unicórnio
 Fiz uma linha do tempo bem rápida e simples para facilitar o entendimento:
 
