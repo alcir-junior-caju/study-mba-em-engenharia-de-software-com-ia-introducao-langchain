@@ -18,6 +18,12 @@ https://github.com/alcir-junior-caju/study-mba-em-engenharia-de-software-com-ia
 
 ---
 
+## � Instruções de Configuração e Uso
+
+Para instruções detalhadas sobre configuração do ambiente, instalação, uso e desenvolvimento, consulte o arquivo [Instructions.md](Instructions.md).
+
+---
+
 ## Visualizar o projeto na IDE:
 
 Para quem quiser visualizar o projeto na IDE clique no teclado a tecla `ponto`, esse recurso do GitHub é bem bacana
