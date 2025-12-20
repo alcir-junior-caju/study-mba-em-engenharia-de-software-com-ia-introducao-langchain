@@ -18,7 +18,7 @@ https://github.com/alcir-junior-caju/study-mba-em-engenharia-de-software-com-ia
 
 ---
 
-## � Instruções de Configuração e Uso
+## Instruções de Configuração e Uso
 
 Para instruções detalhadas sobre configuração do ambiente, instalação, uso e desenvolvimento, consulte o arquivo [Instructions.md](Instructions.md).
 
@@ -89,8 +89,6 @@ No dia a dia de quem trabalha com IA, a necessidade primordial é ter fontes de 
 Embora o Python tenha bibliotecas nativas úteis (como PyPDF), o LangChain cria **abstrações** poderosas sobre elas.
 * **Splitting (Divisão):** Eles desenvolveram métodos para "splitar" (dividir) documentos. Você pega um arquivo grande e o transforma em pedaços menores (*chunks*) para carregar, guardar e utilizar posteriormente.
 
-
-
 > **Analogia de Divisão:**
 > Pense nisso como **fatiar um pão de forma inteiro em sanduíches individuais**. É muito mais fácil consumir e processar pequenos sanduíches (chunks) do que tentar comer o pão inteiro de uma vez só.
 
@@ -102,8 +100,6 @@ Inevitavelmente, você trabalhará com modelos de *embedding* e armazenamento ve
 > **Exemplo de Embedding:**
 > O modelo transforma uma frase como **"O céu é azul"** em uma sequência numérica complexa que a máquina entende matematicamente, em vez de apenas ler as palavras.
 
-
-
 Basicamente, tudo o que você faz em IA (desde *self-attention* até *feed-forward*) é baseado em vetores. Os dados precisam ser vetorizados para fazer sentido dentro do modelo e interagir com os pesos treinados.
 
 ## O Poder do Encadeamento e LCEL
@@ -114,16 +110,12 @@ O LangChain é poderoso porque não permite apenas executar uma ação isolada, 
 Foi introduzido algo chamado **LCEL**. Antigamente, pegar a saída de uma etapa e colocar como entrada na próxima era burocrático.
 * **Função:** Agora, com o LCEL, essa transferência é fluida.
 
-
-
 > **Exemplo de Encadeamento (Chain):**
 > Imagine uma **linha de montagem de automóveis**. O chassi (saída da etapa 1) passa automaticamente para a pintura (entrada da etapa 2), e depois para a montagem do motor (entrada da etapa 3), sem que o operário precise carregar o carro nas costas entre as estações.
 
 ## Abstração de Banco de Dados e Memória
 * **Nível de Abstração:** O LangChain abstrai os detalhes de baixo nível ("low level"). Você não precisa decorar o SDK específico de cada banco de dados vetorial; a ferramenta gerencia isso para você.
 * **Memória:** Recursos nativos para guardar o histórico da conversa conforme a interação ocorre.
-
-
 
 ### Otimização e Sumarização
 Para conversas longas, não precisamos injetar todo o histórico o tempo todo.
