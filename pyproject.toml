@@ -22,6 +22,7 @@ ruff = "^0.7.0"
 mypy = "^1.8.0"
 
 [tool.poetry.scripts]
+langchain = "langchain_project.main:main"
 langchain-project = "langchain_project.main:main"
 
 [build-system]
