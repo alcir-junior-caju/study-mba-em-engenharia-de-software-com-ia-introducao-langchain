@@ -7,6 +7,11 @@
 ```
 langchain/
 ├── src/
+│   ├── _fundamentos/
+│   │   ├── _gemini/
+│   │   │   └── hello-world.py
+│   │   └── _openai/
+│   │       └── hello-world.py
 │   └── langchain_project/
 │       ├── __init__.py
 │       └── main.py
@@ -44,11 +49,13 @@ langchain/
 
 ### 2. Instalação
 
-O Poetry já criou e ativou o ambiente virtual automaticamente durante a instalação:
+Instale as dependências do projeto:
 
 ```bash
 poetry install
 ```
+
+O Poetry criará e ativará o ambiente virtual automaticamente.
 
 ### 3. Configuração de Variáveis de Ambiente
 
@@ -67,14 +74,25 @@ GOOGLE_API_KEY=sua_chave_google_aqui
 
 ## 💻 Uso
 
-### Executar o Projeto
+### Executar Exemplos Fundamentais
+
+```bash
+# Exemplo Hello World com OpenAI
+poetry run python src/_fundamentos/_openai/hello-world.py
+
+# Exemplo Hello World com Google Gemini
+poetry run python src/_fundamentos/_gemini/hello-world.py
+```
+
+### Executar o Projeto Principal
 
 ```bash
 # Usando poetry run
 poetry run python src/langchain_project/main.py
 
-# Ou usando o script configurado
+# Ou usando os scripts configurados
 poetry run langchain-project
+poetry run langchain
 
 # Ou ativando o shell do poetry
 poetry shell
