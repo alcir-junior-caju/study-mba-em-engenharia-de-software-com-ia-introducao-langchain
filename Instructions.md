@@ -195,7 +195,7 @@ def test_exemplo():
 load_dotenv()
 
 # Seu código aqui
-model = ChatOpenAI(model="gpt-4o-mini")
+model = ChatOpenAI(model="gpt-5-mini")
 result = model.invoke("Hello!")
 print(result.content)
 ```

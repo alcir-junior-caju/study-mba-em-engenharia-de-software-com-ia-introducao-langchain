@@ -8,7 +8,7 @@ question_template = PromptTemplate(
     template="Hi, I'm {name}! Tell me a joke with my name!"
 )
 
-model = ChatOpenAI(model="gpt-4o-mini", temperature=0.5)
+model = ChatOpenAI(model="gpt-5-mini", temperature=0.5)
 
 chain = question_template | model
 

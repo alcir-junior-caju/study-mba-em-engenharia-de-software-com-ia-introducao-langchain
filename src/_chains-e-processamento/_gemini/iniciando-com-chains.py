@@ -8,7 +8,7 @@ question_template = PromptTemplate(
     template="Hi, I'm {name}! Tell me a joke with my name!"
 )
 
-model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.5)
+model = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.5)
 
 chain = question_template | model
 
