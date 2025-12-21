@@ -82,6 +82,9 @@ poetry run python src/_fundamentos/_openai/hello-world.py
 
 # Exemplo Hello World com Google Gemini
 poetry run python src/_fundamentos/_gemini/hello-world.py
+
+# Outros exemplos fundamentais
+poetry run python src/_fundamentos/prompt-template.py
 ```
 
 ### Executar o Projeto Principal
