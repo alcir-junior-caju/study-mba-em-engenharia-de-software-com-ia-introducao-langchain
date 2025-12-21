@@ -9,12 +9,16 @@ langchain/
 ├── src/
 │   ├── _fundamentos/
 │   │   ├── _gemini/
-│   │   │   └── hello-world.py
+│   │   │   ├── hello-world.py
+│   │   │   └── chat-prompt-template.py
 │   │   └── _openai/
-│   │       └── hello-world.py
-│   └── langchain_project/
-│       ├── __init__.py
-│       └── main.py
+│   │       ├── hello-world.py
+│   │       └── chat-prompt-template.py
+│   └── _chains-e-processamento/
+│       ├── _gemini/
+│       │   └── iniciando-com-chains.py
+│       └── _openai/
+│           └── iniciando-com-chains.py
 ├── tests/
 │   └── __init__.py
 ├── .env.example
@@ -74,32 +78,50 @@ GOOGLE_API_KEY=sua_chave_google_aqui
 
 ## 💻 Uso
 
-### Executar Exemplos Fundamentais
+### Executar Scripts
+
+Os scripts estão organizados por categoria e modelo. Execute-os diretamente:
+
+#### Fundamentos
 
 ```bash
-# Exemplo Hello World com OpenAI
+# Hello World com OpenAI
 poetry run python src/_fundamentos/_openai/hello-world.py
 
-# Exemplo Hello World com Google Gemini
+# Hello World com Google Gemini
 poetry run python src/_fundamentos/_gemini/hello-world.py
 
-# Outros exemplos fundamentais
+# Chat Prompt Template com OpenAI
+poetry run python src/_fundamentos/_openai/chat-prompt-template.py
+
+# Chat Prompt Template com Google Gemini
+poetry run python src/_fundamentos/_gemini/chat-prompt-template.py
+
+# Prompt Template básico
 poetry run python src/_fundamentos/prompt-template.py
 ```
 
-### Executar o Projeto Principal
+#### Chains e Processamento
 
 ```bash
-# Usando poetry run
-poetry run python src/langchain_project/main.py
+# Chains com OpenAI
+poetry run python src/_chains-e-processamento/_openai/iniciando-com-chains.py
 
-# Ou usando os scripts configurados
-poetry run langchain-project
-poetry run langchain
+# Chains com Google Gemini
+poetry run python src/_chains-e-processamento/_gemini/iniciando-com-chains.py
+```
 
-# Ou ativando o shell do poetry
+### Atalho com Poetry Shell
+
+Para executar vários scripts sem repetir `poetry run`:
+
+```bash
+# Ativar o shell do ambiente virtual
 poetry shell
-python src/langchain_project/main.py
+
+# Agora execute diretamente
+python src/_fundamentos/_openai/hello-world.py
+python src/_chains-e-processamento/_gemini/iniciando-com-chains.py
 ```
 
 ### Executar Testes
@@ -145,20 +167,37 @@ poetry env info
 
 ## 📝 Desenvolvimento
 
-### Adicionar Novos Módulos
+### Estrutura de Pastas
 
-Crie novos arquivos Python dentro de `src/langchain_project/`:
+O projeto segue uma estrutura organizada por tópicos:
 
-```python
-# src/langchain_project/meu_modulo.py
-from langchain_openai import ChatOpenAI
-from dotenv import load_dotenv
+```
+src/
+├── _fundamentos/           # Conceitos básicos do LangChain
+│   ├── _gemini/           # Exemplos usando Google Gemini
+│   └── _openai/           # Exemplos usando OpenAI
+└── _chains-e-processamento/  # Chains e pipelines
+    ├── _gemini/
+    └── _openai/
+```
 
+### Adicionar Novos Scripts
+
+Para adicionar um novo script:
+
+1. Escolha a categoria apropriada (ou crie uma nova pasta `_categoria/`)
+2. Crie subpastas `_gemini/` e `_openai/` se necessário
+3. Adicione seu script Python:
+fundamentos.py
+def test_exemplo():
+    # Seus testes aqui
+    assert Tru
 load_dotenv()
 
-def minha_funcao():
-    # Seu código aqui
-    pass
+# Seu código aqui
+model = ChatOpenAI(model="gpt-4o-mini")
+result = model.invoke("Hello!")
+print(result.content)
 ```
 
 ### Adicionar Testes
