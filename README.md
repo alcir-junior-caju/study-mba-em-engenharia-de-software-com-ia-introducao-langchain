@@ -146,3 +146,142 @@ Interface unificada para geração e armazenamento:
 * **Memória e Histórico:** Gestão de contexto.
 * **Prompt Templates:** Placeholders e estruturas reutilizáveis de comandos.
 * **OutputParsing & Pydantic:** Estruturação e validação das saídas geradas pela IA.
+
+---
+
+# Iniciando com Sumarização: Contexto e Necessidade
+
+## O Problema: Acúmulo de Tokens e Stateless
+Para entender a importância da sumarização, precisamos primeiro entender como as LLMs funcionam em conversas longas:
+* **Natureza Stateless:** Por padrão, a LLM não tem memória. Ela não guarda o estado da conversa anterior.
+* **O Acúmulo:** Para manter a coerência ("Lembrar do que foi dito"), você precisa re-enviar todo o histórico a cada nova interação (Interação 1 + Interação 2 + Interação 3...).
+* **A Consequência:** O texto de entrada (input) cresce exponencialmente, consumindo mais *tokens* a cada rodada.
+
+## A Questão da Janela de Contexto (Context Window)
+Antigamente, o problema era o limite técnico (a janela "estoura" e você perde mensagens antigas). Hoje, com modelos modernos (o instrutor cita hipoteticamente um "GPT-5"), temos janelas de 1 milhão de tokens e saídas de 128k tokens.
+* **A pergunta:** *Se a janela é gigante, por que eu preciso sumarizar?*
+
+## Os Três Pilares da Decisão (Por que usar?)
+Mesmo com janelas de contexto infinitas, a sumarização é vital por três motivos, especialmente pensando em **Larga Escala**:
+
+1.  **Custo ($$):** Você paga por token processado. Enviar um histórico gigante de 4 anos de conversa toda vez que o usuário diz "Oi" é financeiramente inviável em escala.
+2.  **Latência (Performance):** Quanto mais tokens a IA precisa ler e processar, mais lenta é a resposta. Memória e poder computacional são recursos finitos.
+3.  **Necessidade Real:** Muitas vezes, para responder à pergunta atual, a IA não precisa ler cada palavra dita há meses atrás; ela precisa apenas do contexto principal.
+
+> **Exemplo Prático de Atendimento ao Cliente:**
+> Imagine um cliente que interage com a empresa desde **janeiro de 2026** e volta a chamar em **2030**.
+> Não faz sentido carregar e processar o histórico literal de 4 anos (milhares de mensagens) para resolver um problema atual. O que você precisa é de um **resumo** dos eventos principais desse cliente.
+
+## O Que é a Sumarização na Prática?
+A sumarização é a técnica de comprimir o histórico:
+* **Perda:** Você perde o "palavra por palavra" (o texto exato).
+* **Ganho:** Você mantém o **contexto**, as **nuances** e os **dados importantes**.
+Isso permite manter a inteligência da aplicação sem inflar o custo e a latência. Como isso virou padrão de mercado, o **LangChain** já possui abstrações prontas para lidar com isso.
+
+---
+
+# Agentes de IA e o Framework ReAct
+
+## O Que São Agentes no LangChain?
+No ecossistema do LangChain, é possível criar agentes de forma nativa.
+* **Agentes Simples:** O LangChain "puro" é excelente para criar agentes que executam tarefas específicas sem a necessidade de frameworks complexos adicionais.
+* **Aplicações Agênticas Complexas:** Para arquiteturas que envolvem múltiplos agentes conversando entre si, ferramentas como o **LangGraph** são mais indicadas para a orquestração.
+
+## A Arquitetura de um Agente
+Diferente de um software tradicional (que tem um *entry point* -> regras de negócio fixas -> saída), o Agente de IA funciona de forma diferente:
+1.  **O "Cérebro" é a LLM:** O centro do software é o modelo de linguagem.
+2.  **Tomada de Decisão:** Ele recebe uma instrução e **decide** qual caminho tomar (ex: sumarizar um texto, consultar um banco de dados, transformar dados em JSON ou buscar na internet).
+
+### Componentes Essenciais
+Para um agente funcionar, ele precisa de três pilares:
+* **Prompt:** As instruções de como ele deve raciocinar e se comportar (persona).
+* **Ferramentas (Tools):** As habilidades que ele possui (ex: função de busca, calculadora, acesso a API).
+* **Recursos (Resources/MCP):** Fontes de dados e protocolos de contexto que ele pode acessar para obter informações.
+
+---
+
+## O Conceito ReAct (Reason + Act)
+O padrão mais conhecido para agentes no LangChain é o **ReAct**. O nome vem da fusão de **Re**asoning (Raciocínio) e **Act**ing (Ação).
+
+Não é apenas "reagir"; é uma **estrutura de pensamento cíclica**. O agente repete o seguinte loop até resolver o problema:
+1.  **Thought (Pensar):** O agente analisa o pedido e planeja o próximo passo.
+2.  **Action (Agir):** Ele executa uma ação baseada no pensamento (ex: usar uma ferramenta).
+3.  **Observation (Observar):** Ele lê o resultado dessa ação.
+4.  **Repeat:** Ele usa a observação para gerar um novo pensamento.
+
+---
+
+## Exemplo Prático do Ciclo ReAct
+Imagine que o usuário pergunte: **"Qual a população do Brasil e a densidade demográfica?"**
+
+### Ciclo 1
+* **Thought:** Preciso da população atual e da área territorial.
+* **Action:** *Busca no Google:* "População Brasil 2024".
+* **Observation:** Encontrei "216 milhões de habitantes".
+
+### Ciclo 2
+* **Thought:** Agora tenho a população, preciso da área.
+* **Action:** *Busca no Google:* "Área territorial Brasil km²".
+* **Observation:** Encontrei "8.515.767 km²".
+
+### Ciclo 3
+* **Thought:** Tenho os dois dados. Agora preciso calcular a densidade (População / Área).
+* **Action:** *Executar Cálculo* (216.000.000 / 8.515.767).
+* **Observation:** Resultado é aprox. 25.37.
+
+### Final Answer
+* **Resposta:** "O Brasil tem aproximadamente 216 milhões de habitantes e uma densidade de 25.4 habitantes por km²."
+
+Essa estrutura de **raciocínio explícito** é o que permite aos agentes resolverem problemas complexos passo a passo, em vez de tentar adivinhar tudo de uma vez.
+
+---
+
+# Introdução ao Gerenciamento de Memória em IA
+
+## 1. O que é "Memória" neste contexto?
+Antes de tudo, é vital desmistificar o termo. Quando falamos de memória em Agentes de IA e LLMs:
+* **Não é:** Memória RAM, VRAM (GPU) ou espaço de disco do servidor.
+* **É:** A capacidade de **guardar o contexto** e o conteúdo histórico das interações para que o modelo entenda a continuidade da conversa.
+
+## 2. O Desafio: A Natureza Stateless
+Os LLMs (como GPT, Claude, Llama) são **stateless** (sem estado).
+* **O Problema:** Eles não "lembram" do que você falou há 10 segundos. Cada interação é nova.
+* **A Solução:** Para manter uma conversa coerente, você (o desenvolvedor) precisa reenviar **100% do histórico** de mensagens anteriores junto com a nova pergunta a cada rodada.
+
+> **Nota Técnica:** O modelo possui uma memória interna (pesos treinados) e caches de baixo nível, mas isso é da arquitetura dele. O nosso foco aqui é o **histórico de conversação**.
+
+---
+
+## 3. Tipos de Memória: Curto Prazo vs. Longo Prazo
+
+Podemos dividir o gerenciamento desse histórico em duas categorias principais:
+
+### Memória de Curto Prazo (Short-Term)
+* **Definição:** É o contexto mantido apenas **durante uma transação** ou sessão de conversa específica.
+* **Funcionamento:** Existe enquanto a operação está ativa.
+* **Armazenamento:** Variáveis em memória, Cache (Redis) ou Banco de Dados Temporário.
+
+### Memória de Longo Prazo (Long-Term)
+* **Definição:** O histórico persistente que sobrevive dias, meses ou anos (ex: histórico de atendimento de um cliente).
+* **Armazenamento:** Obrigatoriamente em **Banco de Dados** persistente.
+* **Objetivo:** Permitir restaurar o contexto de onde parou ou analisar comportamentos passados.
+
+---
+
+## 4. O Problema do Histórico Infinito
+Conforme o tempo passa, o histórico (chats, e-mails, transcrições) torna-se gigantesco. Tentar enviar **tudo** para a IA gera problemas:
+
+1.  **Custo e Limites:** Enviar terabytes de texto estoura o limite de tokens (*Context Window*) e custa caro.
+2.  **Qualidade (Alucinação):** O instrutor destaca um ponto crucial: **"Mais informação nem sempre é melhor"**.
+    * Passar um histórico gigante e desnecessário pode gerar ambiguidade e fazer a IA alucinar, similar ao que ocorre quando damos exemplos ruins em *Few-Shot Prompting*.
+
+## 5. Estratégias de Solução
+Para lidar com o volume de dados, usamos estratégias como:
+* **Restauração Parcial:** Carregar apenas as últimas mensagens.
+* **Sumarização:** Compactar o histórico antigo em resumos, mantendo o contexto sem gastar todos os tokens.
+
+## 6. O Papel do LangChain
+Como a IA é uma área nova ("uma criança" comparada à engenharia de software tradicional), os padrões ainda estão se formando. O **LangChain** entra como a ferramenta que facilita:
+* Carregar mensagens antigas.
+* Gerenciar o envio para a LLM.
+* Implementar estratégias de memória de forma simplificada.
