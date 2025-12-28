@@ -7,10 +7,12 @@ readme = "README.md"
 packages = [{include = "langchain_project", from = "src"}]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 langchain = "^0.3.0"
 langchain-openai = "^0.2.0"
 langchain-google-genai = "^2.0.0"
+langchain-community = "^0.3.0"
+langchain-text-splitters = "^0.3.0"
 python-dotenv = "^1.0.0"
 beautifulsoup4 = "^4.12.0"
 pypdf = "^5.0.0"
@@ -31,19 +33,19 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 88
-target-version = ['py39']
+target-version = ['py310']
 include = '\.pyi?$'
 
 [tool.ruff]
 line-length = 88
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "W", "B", "C4", "UP"]
 ignore = []
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.10"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
