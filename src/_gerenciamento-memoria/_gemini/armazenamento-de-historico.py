@@ -3,8 +3,11 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain_core.runnables import RunnableWithMessageHistory
+from rich import print
+from rich.console import Console
 
 load_dotenv()
+console = Console()
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", "You are a helpful assistant."),
@@ -34,13 +37,13 @@ config = {"configurable": {"session_id": "demo-session"}}
 
 # Interactions
 response1 = conversational_chain.invoke({"input": "Hello, my name is Caju. how are you?"}, config=config)
-print("Assistant: ", response1.content)
-print("-"*30)
+print("[bold cyan]Assistant:[/bold cyan]", response1.content)
+console.rule(style="dim")
 
 response2 = conversational_chain.invoke({"input": "Can you repeat my name?"}, config=config)
-print("Assistant: ", response2.content)
-print("-"*30)
+print("[bold cyan]Assistant:[/bold cyan]", response2.content)
+console.rule(style="dim")
 
 response3 = conversational_chain.invoke({"input": "Can you repeat my name in a motivation phrase?"}, config=config)
-print("Assistant: ", response3.content)
-print("-"*30)
+print("[bold cyan]Assistant:[/bold cyan]", response3.content)
+console.rule(style="dim")

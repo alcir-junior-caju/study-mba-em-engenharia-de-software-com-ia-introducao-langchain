@@ -2,6 +2,8 @@ from langchain.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.runnables import chain
 from dotenv import load_dotenv
+from rich import print
+
 load_dotenv()
 
 @chain
@@ -25,4 +27,5 @@ chain = question_template | model
 chain2 = square | question_template2 | model
 
 result = chain2.invoke({"x":10})
+print("[bold green]Resultado:[/bold green]")
 print(result.content)

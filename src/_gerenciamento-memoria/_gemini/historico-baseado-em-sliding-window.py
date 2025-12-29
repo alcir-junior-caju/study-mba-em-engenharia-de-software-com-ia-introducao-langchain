@@ -5,6 +5,7 @@ from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.messages import trim_messages
 from langchain_core.runnables import RunnableLambda
+from rich import print
 
 load_dotenv()
 
@@ -50,10 +51,10 @@ conversational_chain = RunnableWithMessageHistory(
 config = {"configurable": {"session_id": "demo-session"}}
 
 resp1 = conversational_chain.invoke({"input": "My name is Caju. Reply only with 'OK' and do not mention my name."}, config=config)
-print("Assistant:", resp1.content)
+print("[bold cyan]Assistant:[/bold cyan]", resp1.content)
 
 resp2 = conversational_chain.invoke({"input": "Tell me a one-sentence fun fact. Do not mention my name."}, config=config)
-print("Assistant:", resp2.content)
+print("[bold cyan]Assistant:[/bold cyan]", resp2.content)
 
 resp3 = conversational_chain.invoke({"input": "What is my name?"}, config=config)
-print("Assistant:", resp3.content)
+print("[bold cyan]Assistant:[/bold cyan]", resp3.content)

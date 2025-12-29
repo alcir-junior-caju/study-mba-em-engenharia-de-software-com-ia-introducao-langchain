@@ -3,7 +3,11 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.agents import create_react_agent, AgentExecutor
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
+from rich import print
+from rich.console import Console
+
 load_dotenv()
+console = Console()
 
 @tool("calculator", return_direct=True)
 def calculator(expression: str) -> str:
@@ -74,5 +78,8 @@ agent_executor = AgentExecutor.from_agent_and_tools(
     handle_parsing_errors="Invalid format. Either provide an Action with Action Input, or a Final Answer only.",
     max_iterations=3)
 
-print(agent_executor.invoke({"input": "What is the capital of Iran?"}))
+console.rule("[bold cyan]Query: Capital of Iran[/bold cyan]")
+result = agent_executor.invoke({"input": "What is the capital of Iran?"})
+print("[bold green]Resposta:[/bold green]")
+print(result)
 # print(agent_executor.invoke({"input": "How much is 10 + 10?"}))

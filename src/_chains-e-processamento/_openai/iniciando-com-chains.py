@@ -1,6 +1,8 @@
 from langchain.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
+from rich import print
+
 load_dotenv()
 
 question_template = PromptTemplate(
@@ -13,4 +15,5 @@ model = ChatOpenAI(model="gpt-5-mini", temperature=0.5)
 chain = question_template | model
 
 result = chain.invoke({"name": "Wesley"})
+print("[bold green]Resultado:[/bold green]")
 print(result.content)

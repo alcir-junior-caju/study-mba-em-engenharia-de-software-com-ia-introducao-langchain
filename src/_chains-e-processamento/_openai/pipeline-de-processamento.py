@@ -2,6 +2,8 @@ from langchain.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
 from dotenv import load_dotenv
+from rich import print
+
 load_dotenv()
 
 template_translate = PromptTemplate(
@@ -20,4 +22,5 @@ translate = template_translate | llm_en | StrOutputParser()
 pipeline = {"text": translate} | template_summary | llm_en | StrOutputParser()
 
 result = pipeline.invoke({"initial_text": "LangChain é um framework para desenvolvimento de aplicações de IA"})
+print("[bold green]Resultado:[/bold green]")
 print(result)

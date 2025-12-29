@@ -1,7 +1,11 @@
 from langchain.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
+from rich import print
+from rich.console import Console
+
 load_dotenv()
+console = Console()
 
 system = ("system", "you are an assistant that answers questions in a {style} style")
 user = ("user", "{question}")
@@ -10,9 +14,11 @@ chat_prompt = ChatPromptTemplate([system, user])
 
 messages = chat_prompt.format_messages(style="funny", question="Who is Alan Turing?")
 
+print("[bold cyan]Mensagens:[/bold cyan]")
 for msg in messages:
-    print(f"{msg.type}: {msg.content}")
+    console.print(f"[yellow]{msg.type}:[/yellow] {msg.content}")
 
 model = ChatOpenAI(model="gpt-5-mini", temperature=0.5)
 result = model.invoke(messages)
+print("\n[bold green]Resposta:[/bold green]")
 print(result.content)

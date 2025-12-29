@@ -2,6 +2,8 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.chains.summarize import load_summarize_chain
 from dotenv import load_dotenv
+from rich import print
+
 load_dotenv()
 
 long_text = """
@@ -52,4 +54,5 @@ llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.5)
 chain_sumarize = load_summarize_chain(llm, chain_type="map_reduce", verbose=True)
 
 result = chain_sumarize.invoke({"input_documents": parts})
+print("[bold green]Resumo Map-Reduce:[/bold green]")
 print(result)

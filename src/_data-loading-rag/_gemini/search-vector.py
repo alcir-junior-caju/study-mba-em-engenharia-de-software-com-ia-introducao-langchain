@@ -1,10 +1,13 @@
 import os
 from dotenv import load_dotenv
-
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_postgres import PGVector
+from rich import print
+from rich.console import Console
+from rich.panel import Panel
 
 load_dotenv()
+console = Console()
 for k in ("GOOGLE_API_KEY", "PGVECTOR_URL","PGVECTOR_COLLECTION"):
     if not os.getenv(k):
         raise RuntimeError(f"Environment variable {k} is not set")
@@ -24,13 +27,13 @@ store = PGVector(
 results = store.similarity_search_with_score(query, k=3)
 
 for i, (doc, score) in enumerate(results, start=1):
-    print("="*50)
-    print(f"Resultado {i} (score: {score:.2f}):")
-    print("="*50)
+    console.rule(f"[bold cyan]Resultado {i}[/bold cyan]")
+    print(f"[yellow]Score:[/yellow] {score:.2f}")
 
-    print("\nTexto:\n")
+    print("\n[bold green]Texto:[/bold green]")
     print(doc.page_content.strip())
 
-    print("\nMetadados:\n")
+    print("\n[bold blue]Metadados:[/bold blue]")
     for k, v in doc.metadata.items():
-        print(f"{k}: {v}")
+        print(f"  [cyan]{k}:[/cyan] {v}")
+    print()

@@ -4,6 +4,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnableLambda
 from dotenv import load_dotenv
+from rich import print
 
 load_dotenv()
 long_text = """Dawn threads a pale gold through the alley of glass.
@@ -62,4 +63,5 @@ prepare_reduce_input = RunnableLambda(lambda summaries: {"context": "\n".join(su
 pipeline = map_stage | prepare_reduce_input | reduce_chain
 
 result = pipeline.invoke(parts)
+print("[bold green]Resumo Final:[/bold green]")
 print(result)

@@ -1,6 +1,8 @@
 from langchain.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from dotenv import load_dotenv
+from rich import print
+
 load_dotenv()
 
 question_template = PromptTemplate(
@@ -12,5 +14,4 @@ model = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.5)
 
 chain = question_template | model
 
-result = chain.invoke({"name": "Caju"})
-print(result.content)
+result = chain.invoke({"name": "Caju"})print("[bold green]Resultado:[/bold green]")print(result.content)

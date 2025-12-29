@@ -5,9 +5,14 @@ import importlib.util
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
+from rich import print
+from rich.console import Console
+from rich.panel import Panel
+from rich.tree import Tree
 
 # Load environment variables from .env file
 load_dotenv()
+console = Console()
 
 
 def find_script(model: str, script_name: str, category: str = None) -> Path:
@@ -58,13 +63,15 @@ def run_script(model: str, script_name: str, category: str = None) -> None:
     script_path = find_script(model, script_name, category)
 
     if not script_path:
-        print(f"❌ Erro: Script '{script_name}' não encontrado para o modelo '{model}'")
+        console.print(f"[bold red]❌ Erro:[/bold red] Script '{script_name}' não encontrado para o modelo '{model}'")
 
         # List available scripts
         base_src = Path(__file__).parent.parent
-        print(f"\n📁 Scripts disponíveis para '{model}':\n")
+        console.print(f"\n[bold cyan]📁 Scripts disponíveis para '{model}':[/bold cyan]\n")
 
         found_any = False
+        tree = Tree(f"[bold yellow]{model}[/bold yellow]")
+
         for category_dir in sorted(base_src.glob("_*")):
             if category_dir.is_dir():
                 model_dir = category_dir / f"_{model}"
@@ -73,23 +80,25 @@ def run_script(model: str, script_name: str, category: str = None) -> None:
                     if scripts:
                         found_any = True
                         category_name = category_dir.name[1:]  # Remove leading underscore
-                        print(f"  [{category_name}]")
+                        branch = tree.add(f"[cyan]{category_name}[/cyan]")
                         for script in sorted(scripts):
-                            print(f"    - {script.name}")
-                        print()
+                            branch.add(f"[green]{script.name}[/green]")
 
-        if not found_any:
-            print(f"  Nenhum script encontrado para o modelo '{model}'")
+        if found_any:
+            console.print(tree)
+        else:
+            console.print(f"  [yellow]Nenhum script encontrado para o modelo '{model}'[/yellow]")
 
         sys.exit(1)
 
     # Get category name for display
     category_name = script_path.parent.parent.name[1:]
 
-    print(f"🚀 Executando: {script_path.name}")
-    print(f"📦 Modelo: {model}")
-    print(f"📂 Categoria: {category_name}")
-    print("-" * 50)
+    console.rule(f"[bold cyan]Executando Script[/bold cyan]")
+    console.print(f"[bold green]📄 Script:[/bold green] {script_path.name}")
+    console.print(f"[bold yellow]📦 Modelo:[/bold yellow] {model}")
+    console.print(f"[bold blue]📂 Categoria:[/bold blue] {category_name}")
+    console.rule(style="dim")
 
     # Load and execute the module
     spec = importlib.util.spec_from_file_location("dynamic_module", script_path)
@@ -98,7 +107,7 @@ def run_script(model: str, script_name: str, category: str = None) -> None:
         sys.modules["dynamic_module"] = module
         spec.loader.exec_module(module)
     else:
-        print(f"❌ Erro ao carregar o módulo: {script_path}")
+        console.print(f"[bold red]❌ Erro ao carregar o módulo:[/bold red] {script_path}")
         sys.exit(1)
 
 

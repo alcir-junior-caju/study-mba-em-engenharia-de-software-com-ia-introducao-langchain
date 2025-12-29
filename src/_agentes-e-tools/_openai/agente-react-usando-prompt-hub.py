@@ -3,6 +3,8 @@ from langchain_openai import ChatOpenAI
 from langchain.agents import create_react_agent, AgentExecutor
 from langchain import hub
 from dotenv import load_dotenv
+from rich import print
+
 load_dotenv()
 
 @tool("calculator", return_direct=True)
@@ -44,5 +46,8 @@ agent_executor = AgentExecutor.from_agent_and_tools(
     # max_iterations=5
 )
 
-print(agent_executor.invoke({"input": "What is the capital of Iran?"}))
+print("[bold cyan]Query: Capital of Iran[/bold cyan]")
+result = agent_executor.invoke({"input": "What is the capital of Iran?"})
+print("[bold green]Resposta:[/bold green]")
+print(result)
 # print(agent_executor.invoke({"input": "How much is 10 + 10?"}))
