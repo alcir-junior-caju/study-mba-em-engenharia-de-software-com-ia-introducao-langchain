@@ -109,10 +109,10 @@ def main() -> None:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Exemplos:
-  poetry run langchain gemini hello-world
-  poetry run langchain openai iniciando-com-chains
-  poetry run langchain gemini hello-world.py
-  poetry run langchain openai chat-prompt-template --category fundamentos
+  uv run langchain gemini hello-world
+  uv run langchain openai iniciando-com-chains
+  uv run langchain gemini hello-world.py
+  uv run langchain openai chat-prompt-template --category fundamentos
         """
     )
 

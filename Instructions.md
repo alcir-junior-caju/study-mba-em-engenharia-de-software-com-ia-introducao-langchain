@@ -90,20 +90,35 @@ langchain/
 
 ### 1. Pré-requisitos
 
-- Python 3.9 ou superior
-- Poetry 2.x
+- Python 3.10 ou superior
+- uv (ferramenta de gerenciamento de pacotes Python ultra-rápida)
 
-### 2. Instalação
+### 2. Instalação do uv
+
+Instale o uv se ainda não tiver:
+
+```bash
+# macOS e Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# Ou via pip
+pip install uv
+```
+
+### 3. Instalação das Dependências
 
 Instale as dependências do projeto:
 
 ```bash
-poetry install
+uv sync
 ```
 
-O Poetry criará e ativará o ambiente virtual automaticamente.
+O uv criará e gerenciará o ambiente virtual automaticamente.
 
-### 3. Configuração de Variáveis de Ambiente
+### 4. Configuração de Variáveis de Ambiente
 
 Copie o arquivo de exemplo e configure suas chaves de API:
 
@@ -118,7 +133,7 @@ OPENAI_API_KEY=sua_chave_openai_aqui
 GOOGLE_API_KEY=sua_chave_google_aqui
 ```
 
-### 4. Configuração do PostgreSQL (para exemplos de RAG)
+### 5. Configuração do PostgreSQL (para exemplos de RAG)
 
 O projeto inclui um PostgreSQL com pgvector para os exemplos de RAG. Para iniciar o banco de dados:
 
@@ -188,91 +203,93 @@ Os scripts estão organizados por categoria e modelo. Execute-os diretamente:
 
 ```bash
 # Hello World com OpenAI
-poetry run python src/_fundamentos/_openai/hello-world.py
+uv run python src/_fundamentos/_openai/hello-world.py
 
 # Hello World com Google Gemini
-poetry run python src/_fundamentos/_gemini/hello-world.py
+uv run python src/_fundamentos/_gemini/hello-world.py
 
 # Chat Prompt Template com OpenAI
-poetry run python src/_fundamentos/_openai/chat-prompt-template.py
+uv run python src/_fundamentos/_openai/chat-prompt-template.py
 
 # Chat Prompt Template com Google Gemini
-poetry run python src/_fundamentos/_gemini/chat-prompt-template.py
+uv run python src/_fundamentos/_gemini/chat-prompt-template.py
 
 # Prompt Template básico
-poetry run python src/_fundamentos/prompt-template.py
+uv run python src/_fundamentos/prompt-template.py
 ```
 
 #### Chains e Processamento
 
 ```bash
 # Chains com OpenAI
-poetry run python src/_chains-e-processamento/_openai/iniciando-com-chains.py
-poetry run python src/_chains-e-processamento/_openai/chains-decorator.py
-poetry run python src/_chains-e-processamento/_openai/pipeline-de-processamento.py
-poetry run python src/_chains-e-processamento/_openai/pipeline-de-sumarizacao.py
-poetry run python src/_chains-e-processamento/_openai/sumarizacao.py
-poetry run python src/_chains-e-processamento/_openai/sumarizacao-com-map-reduce.py
+uv run python src/_chains-e-processamento/_openai/iniciando-com-chains.py
+uv run python src/_chains-e-processamento/_openai/chains-decorator.py
+uv run python src/_chains-e-processamento/_openai/pipeline-de-processamento.py
+uv run python src/_chains-e-processamento/_openai/pipeline-de-sumarizacao.py
+uv run python src/_chains-e-processamento/_openai/sumarizacao.py
+uv run python src/_chains-e-processamento/_openai/sumarizacao-com-map-reduce.py
 
 # Chains com Google Gemini
-poetry run python src/_chains-e-processamento/_gemini/iniciando-com-chains.py
-poetry run python src/_chains-e-processamento/_gemini/chains-decorator.py
-poetry run python src/_chains-e-processamento/_gemini/pipeline-de-processamento.py
-poetry run python src/_chains-e-processamento/_gemini/pipeline-de-sumarizacao.py
-poetry run python src/_chains-e-processamento/_gemini/sumarizacao.py
-poetry run python src/_chains-e-processamento/_gemini/sumarizacao-com-map-reduce.py
+uv run python src/_chains-e-processamento/_gemini/iniciando-com-chains.py
+uv run python src/_chains-e-processamento/_gemini/chains-decorator.py
+uv run python src/_chains-e-processamento/_gemini/pipeline-de-processamento.py
+uv run python src/_chains-e-processamento/_gemini/pipeline-de-sumarizacao.py
+uv run python src/_chains-e-processamento/_gemini/sumarizacao.py
+uv run python src/_chains-e-processamento/_gemini/sumarizacao-com-map-reduce.py
 
 # Runnable Lambda (independente de modelo)
-poetry run python src/_chains-e-processamento/runnable-lambda.py
+uv run python src/_chains-e-processamento/runnable-lambda.py
 ```
 
 #### Agentes e Tools
 
 ```bash
 # Agentes com OpenAI
-poetry run python src/_agentes-e-tools/_openai/agente-react-e-tools.py
-poetry run python src/_agentes-e-tools/_openai/agente-react-usando-prompt-hub.py
+uv run python src/_agentes-e-tools/_openai/agente-react-e-tools.py
+uv run python src/_agentes-e-tools/_openai/agente-react-usando-prompt-hub.py
 
 # Agentes com Google Gemini
-poetry run python src/_agentes-e-tools/_gemini/agente-react-e-tools.py
-poetry run python src/_agentes-e-tools/_gemini/agente-react-usando-prompt-hub.py
+uv run python src/_agentes-e-tools/_gemini/agente-react-e-tools.py
+uv run python src/_agentes-e-tools/_gemini/agente-react-usando-prompt-hub.py
 ```
 
 #### Data Loading e RAG
 
 ```bash
 # Carregamento de dados (independente de modelo)
-poetry run python src/_data-loading-rag/carregamento-de-pdf.py
-poetry run python src/_data-loading-rag/carregamento-usando-WebBaseLoader.py
+uv run python src/_data-loading-rag/carregamento-de-pdf.py
+uv run python src/_data-loading-rag/carregamento-usando-WebBaseLoader.py
 
 # RAG com OpenAI
-poetry run python src/_data-loading-rag/_openai/ingestion-pgvector.py
-poetry run python src/_data-loading-rag/_openai/search-vector.py
+uv run python src/_data-loading-rag/_openai/ingestion-pgvector.py
+uv run python src/_data-loading-rag/_openai/search-vector.py
 
 # RAG com Google Gemini
-poetry run python src/_data-loading-rag/_gemini/ingestion-pgvector.py
-poetry run python src/_data-loading-rag/_gemini/search-vector.py
+uv run python src/_data-loading-rag/_gemini/ingestion-pgvector.py
+uv run python src/_data-loading-rag/_gemini/search-vector.py
 ```
 
 #### Gerenciamento de Memória
 
 ```bash
 # Memória com OpenAI
-poetry run python src/_gerenciamento-memoria/_openai/armazenamento-de-historico.py
-poetry run python src/_gerenciamento-memoria/_openai/historico-baseado-em-sliding-window.py
+uv run python src/_gerenciamento-memoria/_openai/armazenamento-de-historico.py
+uv run python src/_gerenciamento-memoria/_openai/historico-baseado-em-sliding-window.py
 
 # Memória com Google Gemini
-poetry run python src/_gerenciamento-memoria/_gemini/armazenamento-de-historico.py
-poetry run python src/_gerenciamento-memoria/_gemini/historico-baseado-em-sliding-window.py
+uv run python src/_gerenciamento-memoria/_gemini/armazenamento-de-historico.py
+uv run python src/_gerenciamento-memoria/_gemini/historico-baseado-em-sliding-window.py
 ```
 
-### Atalho com Poetry Shell
+### Executar sem prefixo
 
-Para executar vários scripts sem repetir `poetry run`:
+Para executar scripts diretamente sem usar `uv run`, ative o ambiente virtual:
 
 ```bash
-# Ativar o shell do ambiente virtual
-poetry shell
+# Ativar o ambiente virtual
+source .venv/bin/activate  # Linux/macOS
+# ou
+.venv\Scripts\activate  # Windows
 
 # Agora execute diretamente (exemplos)
 python src/_fundamentos/_openai/hello-world.py
@@ -285,42 +302,48 @@ python src/_gerenciamento-memoria/_openai/armazenamento-de-historico.py
 ### Executar Testes
 
 ```bash
-poetry run pytest
+uv run pytest
 ```
 
 ### Formatação e Linting
 
 ```bash
 # Formatar código com Black
-poetry run black src/ tests/
+uv run black src/ tests/
 
 # Verificar código com Ruff
-poetry run ruff check src/ tests/
+uv run ruff check src/ tests/
 
 # Verificar tipos com MyPy
-poetry run mypy src/
+uv run mypy src/
 ```
 
-## 🛠️ Comandos Úteis do Poetry
+## 🛠️ Comandos Úteis do uv
 
 ```bash
-# Ativar o shell do ambiente virtual
-poetry shell
+# Sincronizar dependências (instalar/atualizar)
+uv sync
 
 # Adicionar uma nova dependência
-poetry add nome-do-pacote
+uv add nome-do-pacote
 
 # Adicionar uma dependência de desenvolvimento
-poetry add --group dev nome-do-pacote
+uv add --dev nome-do-pacote
+
+# Remover uma dependência
+uv remove nome-do-pacote
 
 # Atualizar dependências
-poetry update
+uv lock --upgrade
 
-# Mostrar dependências instaladas
-poetry show
+# Executar um comando no ambiente virtual
+uv run comando
 
-# Informações sobre o ambiente virtual
-poetry env info
+# Executar Python no ambiente virtual
+uv run python script.py
+
+# Mostrar caminho do Python do ambiente virtual
+uv run python -c "import sys; print(sys.executable)"
 ```
 
 ## 📝 Desenvolvimento
@@ -390,8 +413,8 @@ def test_minha_funcao():
 ## ✅ Melhores Práticas Implementadas
 
 - ✅ **Estrutura de Pacote**: Código organizado em `src/` para melhor isolamento
-- ✅ **Ambiente Virtual**: Gerenciado automaticamente pelo Poetry
-- ✅ **Dependências**: Versionamento preciso com Poetry
+- ✅ **Ambiente Virtual**: Gerenciado automaticamente pelo uv
+- ✅ **Dependências**: Versionamento preciso com uv
 - ✅ **Variáveis de Ambiente**: Usando python-dotenv para configurações sensíveis
 - ✅ **Formatação**: Black configurado para código consistente
 - ✅ **Linting**: Ruff para código limpo e sem erros
